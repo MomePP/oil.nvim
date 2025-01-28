@@ -474,6 +474,7 @@ M.open_preview = function(opts, callback)
       opts.split = vim.o.splitright and "belowright" or "aboveleft"
     end
   end
+  config.float.preview_title_pos = config.float.preview_title_pos or 'left'
 
   local preview_win = util.get_preview_win({ include_not_owned = true })
   local prev_win = vim.api.nvim_get_current_win()
@@ -487,6 +488,7 @@ M.open_preview = function(opts, callback)
   if entry.type == "directory" then
     entry_title = entry_title .. "/"
   end
+  entry_title = ' ' .. entry_title .. ' '
 
   if util.is_floating_win() then
     if preview_win == nil then
@@ -518,6 +520,7 @@ M.open_preview = function(opts, callback)
 
       if vim.fn.has("nvim-0.9") == 1 then
         win_opts.title = entry_title
+        win_opts.title_pos = config.float.preview_title_pos
       end
 
       preview_win = vim.api.nvim_open_win(bufnr, true, win_opts)
